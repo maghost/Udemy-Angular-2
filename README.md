@@ -9,6 +9,6 @@ Para executá-lo corretamente é recomendado instalar as ferramentas abaixo:<br 
 - Typescript;
 - Angular2.
 
-Comandos terminal:<br />
+### Comandos terminal:
 npm install (para iniciar o projeto)<br />
 npm install boostrap@v4.0.0-alpha.6 --save (para baixar o bootstrap, a versão pode estar desatualizada nesse caso)
