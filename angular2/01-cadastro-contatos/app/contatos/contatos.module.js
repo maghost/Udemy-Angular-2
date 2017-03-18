@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const common_1 = require("@angular/common");
 const forms_1 = require("@angular/forms");
+const contato_busca_component_1 = require("./contato-busca.component");
 const contato_detalhe_component_1 = require("./contato-detalhe.component");
 const contato_service_1 = require("./contato.service");
 const contatos_lista_component_1 = require("./contatos-lista.component");
@@ -23,10 +24,12 @@ ContatosModule = __decorate([
             forms_1.FormsModule
         ],
         declarations: [
+            contato_busca_component_1.ContatoBuscaComponent,
             contato_detalhe_component_1.ContatoDetalheComponent,
             contatos_lista_component_1.ContatosListaComponent
         ],
         exports: [
+            contato_busca_component_1.ContatoBuscaComponent,
             contatos_lista_component_1.ContatosListaComponent
         ],
         providers: [

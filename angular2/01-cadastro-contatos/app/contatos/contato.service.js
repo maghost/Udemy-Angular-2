@@ -12,14 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@angular/core");
 const http_1 = require("@angular/http");
 require("rxjs/add/operator/toPromise");
-[];
 let ContatoService = class ContatoService {
     constructor(http) {
         this.http = http;
         this.contatosUrl = 'app/contatos';
         this.headers = new http_1.Headers({ 'Content-type': 'application/json' });
     }
-    getContatos() {
+    findAll() {
         return this.http.get(this.contatosUrl)
             .toPromise()
             .then(response => response.json().data)
@@ -52,8 +51,8 @@ let ContatoService = class ContatoService {
         console.log('Error: ', err);
         return Promise.reject(err.message || err);
     }
-    getContato(id) {
-        return this.getContatos()
+    find(id) {
+        return this.findAll()
             .then((contatos) => contatos.find(contato => contato.id === id));
     }
     getContatosSlowly() {
@@ -76,8 +75,13 @@ let ContatoService = class ContatoService {
         })
             .then(() => {
             console.log('terceiro then');
-            return this.getContatos();
+            return this.findAll();
         });
+    }
+    search(termo) {
+        return this.http
+            .get(`${this.contatosUrl}/?nome=${termo}`)
+            .map((res) => res.json().data);
     }
 };
 ContatoService = __decorate([
