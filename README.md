@@ -1,7 +1,7 @@
 # Udemy-Angular-2
 
-Repositório com o conteúdo aprendido no curso de Angular 2 com Typescript.
-Para executá-lo corretamente é recomendado instalar as ferramentas abaixo:
+Repositório com o conteúdo aprendido no curso de Angular 2 com Typescript.<br />
+Para executá-lo corretamente é recomendado instalar as ferramentas abaixo:<br />
 - NodeJS e NPM;
 - Git;
 - Editor de Texto (Visual Studio Code);
@@ -9,6 +9,6 @@ Para executá-lo corretamente é recomendado instalar as ferramentas abaixo:
 - Typescript;
 - Angular2.
 
-Comandos terminal:
-npm install (para iniciar o projeto)
+Comandos terminal:<br />
+npm install (para iniciar o projeto)<br />
 npm install boostrap@v4.0.0-alpha.6 --save (para baixar o bootstrap, a versão pode estar desatualizada nesse caso)
