@@ -8,19 +8,12 @@ import { ContatoService } from './contato.service';
 @Component({
     moduleId: module.id,
     selector: 'contato-detalhe',
-    templateUrl: 'contato-detalhe.component.html',
-    styles: [`
-        .ng-valid[required] {
-            border: 1px solid green;
-        }
-        .ng-invalid.ng-dirty[required] {
-            border: 1px solid red;
-        }
-    `]
+    templateUrl: 'contato-detalhe.component.html'
 })
 export class ContatoDetalheComponent implements OnInit {
 
     contato: Contato;
+    private isNew: boolean = true;
 
     constructor (
         private contatoService: ContatoService,
@@ -34,6 +27,8 @@ export class ContatoDetalheComponent implements OnInit {
             let id: number = +params['id'];
 
             if (id) {
+                this.isNew = false;
+
                 this.contatoService.getContato(id)
                     .then((contato: Contato) => {
                         this.contato = contato;
@@ -42,8 +37,38 @@ export class ContatoDetalheComponent implements OnInit {
         });
     }
 
-    teste(): void {
-        console.log(this.contato);
+    getFormGroupClass(isValid: boolean, isDirty: boolean) : {} {
+        return {
+            'form-group': true,
+            'has-danger': !isValid && isDirty,
+            'has-success': isValid && isDirty
+        }
+    }
+
+    getFormControlClass(isValid: boolean, isDirty: boolean) : {} {
+        return {
+            'form-control': true,
+            'form-control-danger': !isValid && isDirty,
+            'form-control-success': isValid && isDirty
+        }
+    }
+
+    onSubmit(): void {
+        let promise;
+
+        if (this.isNew) {
+            console.log('Cadastrar Contato');
+            promise = this.contatoService.create(this.contato);
+        } else {
+            console.log('Alterar Contrato');
+            promise = this.contatoService.update(this.contato);
+        }
+
+        promise.then(contato => this.goBack());
+    }
+
+    goBack(): void {
+        this.location.back()
     }
 
 }

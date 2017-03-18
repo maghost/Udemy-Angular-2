@@ -1,13 +1,60 @@
 import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
 
-import { Contato } from './contato.model';
-import { CONTATOS } from './contatos-mock';
+import 'rxjs/add/operator/toPromise';
 
+import { Contato } from './contato.model';[
+
+]
 @Injectable()
 export class ContatoService {
 
+    private contatosUrl: string = 'app/contatos';
+    private headers: Headers = new Headers({'Content-type' : 'application/json'});
+
+    constructor(
+        private http: Http
+    ) {}
+
     getContatos(): Promise<Contato[]> {
-        return Promise.resolve(CONTATOS);
+        return this.http.get(this.contatosUrl)
+            .toPromise()
+            .then(response => response.json().data as Contato[])
+            .catch(this.handleError);
+    }
+
+    create(contato: Contato): Promise<Contato> {
+        return this.http
+            .post(this.contatosUrl, JSON.stringify(contato), {headers: this.headers})
+            .toPromise()
+            /*.then((response: Response) => {
+                return response.json().data as Contato;
+            })*/
+            .then((response: Response) => response.json().data as Contato)
+            .catch(this.handleError);
+    }
+
+    update(contato: Contato): Promise<Contato> {
+        const url = `${this.contatosUrl}/${contato.id}`; // app/contatos/:id
+        return this.http
+            .put(url, JSON.stringify(contato), {headers: this.headers})
+            .toPromise()
+            .then(() => contato as Contato)
+            .catch(this.handleError);
+    }
+
+    delete(contato: Contato): Promise<Contato> {
+        const url = `${this.contatosUrl}/${contato.id}`; // app/contatos/:id
+        return this.http
+            .delete(url, {headers: this.headers})
+            .toPromise()
+            .then(() => contato as Contato)
+            .catch(this.handleError);
+    }
+
+    private handleError(err: any): Promise<any> {
+        console.log('Error: ', err);
+        return Promise.reject(err.message || err);
     }
 
     getContato(id: number): Promise<Contato> {
@@ -21,7 +68,7 @@ export class ContatoService {
         })
         .then(() => {
             console.log('primeiro then');
-            return 'Curso Angular 2 Plínio Neves';
+            return 'Curso Angular 2 Matheus Marques';
         })
         .then((param: string) => {
             console.log('segundo then');

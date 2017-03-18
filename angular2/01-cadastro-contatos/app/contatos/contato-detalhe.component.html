@@ -1,28 +1,29 @@
 <div class="container">
     <h2>Salvar Contato</h2>
-    <form #contatoForm="ngForm">
-        <div class="form-group">
-            <label for="nome">Nome</label>
-            <input type="text" class="form-control" placeholder="Insira o nome" required
-                name="nome" [(ngModel)]="contato.nome" #spy />
-            <div class="alert alert-info">{{ spy.className }}</div>
+    <form (ngSubmit)="onSubmit()" #contatoForm="ngForm" novalidate>
+        <div [ngClass]="getFormGroupClass(nome.valid, nome.dirty)">
+            <label for="nome" class="form-control-label">Nome</label>
+            <input type="text" placeholder="Insira o nome" required
+                #nome="ngModel" name="nome" [(ngModel)]="contato.nome" 
+                [ngClass]="getFormControlClass(nome.valid, nome.dirty)" />
+            <div class="form-control-feedback" [hidden]="nome.valid || nome.pristine">O campo Nome é obrigatório!</div>
         </div>
 
-        <div class="form-group">
+        <div [ngClass]="getFormGroupClass(email.valid, email.dirty)">
             <label for="email">Email</label>
-            <input type="email" class="form-control" placeholder="Insira o email" required
-                name="email" [(ngModel)]="contato.email" />
+            <input type="email" placeholder="Insira o email" required
+                #email="ngModel" name="email" [(ngModel)]="contato.email" 
+                [ngClass]="getFormControlClass(email.valid, email.dirty)" />
         </div>
 
-        <div class="form-group">
+        <div [ngClass]="getFormGroupClass(telefone.valid, telefone.dirty)">
             <label for="telefone">Telefone</label>
-            <input type="text" class="form-control" placeholder="Insira o telefone" required
-                name="telefone" [(ngModel)]="contato.telefone" />
+            <input type="text" placeholder="Insira o telefone" required
+                #telefone="ngModel" name="telefone" [(ngModel)]="contato.telefone" 
+                [ngClass]="getFormControlClass(telefone.valid, telefone.dirty)" />
         </div>
 
         <button type="submit" class="btn btn-success" [disabled]="!contatoForm.form.valid">Salvar</button>
-        <a class="btn btn-secondary" routerLink="/">Voltar</a>
+        <a class="btn btn-secondary" (click)="goBack()">Voltar</a>
     </form>
-
-    <button (click)="teste()" class="btn btn-warning">Log</button>
 </div>
